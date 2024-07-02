@@ -111,4 +111,3 @@ Develop an online learning platform where users can enroll in courses, track the
 - Documentation
 - Deployment setup
 - Final review and refactor
-- .....
