@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form, table {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>User Management</h1>
+
+<!-- Form to Create or Update User -->
+<form id="userForm">
+    <input type="hidden" id="userId" />
+    <label for="username">Username:</label>
+    <input type="text" id="username" required><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" required><br><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" required><br><br>
+    <button type="submit">Save User</button>
+</form>
+
+<!-- Table to Display Users -->
+<h2>Users</h2>
+<table id="userTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- User rows will be inserted here -->
+    </tbody>
+</table>
+
+<script>
+    const apiUrl = 'http://localhost:8080/api/v1/users'; // Update with your backend URL
+
+    // Function to fetch and display users
+    function fetchUsers() {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(users => {
+                const userTableBody = document.getElementById('userTable').getElementsByTagName('tbody')[0];
+                userTableBody.innerHTML = ''; // Clear existing rows
+                users.forEach(user => {
+                    const row = userTableBody.insertRow();
+                    row.insertCell(0).textContent = user.id;
+                    row.insertCell(1).textContent = user.username;
+                    row.insertCell(2).textContent = user.email;
+                    row.insertCell(3).textContent = user.password;
+                    const actionsCell = row.insertCell(4);
+                    actionsCell.innerHTML = `<button onclick="editUser(${user.id})">Edit</button> <button onclick="deleteUser(${user.id})">Delete</button>`;
+                });
+            })
+            .catch(error => console.error('There was a problem with the fetch operation:', error));
+    }
+
+    // Function to create or update a user
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const userId = document.getElementById('userId').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const userData = {
+            username,
+            email,
+            password
+        };
+
+        const requestOptions = {
+            method: userId ? 'PUT' : 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        };
+
+        const url = userId ? `${apiUrl}/${userId}` : apiUrl;
+
+        fetch(url, requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(() => {
+                fetchUsers();
+                document.getElementById('userForm').reset();
+                document.getElementById('userId').value = '';
+            })
+            .catch(error => console.error('There was a problem with the fetch operation:', error));
+    });
+
+    // Function to edit a user
+    function editUser(id) {
+        fetch(`${apiUrl}/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(user => {
+                document.getElementById('userId').value = user.id;
+                document.getElementById('username').value = user.username;
+                document.getElementById('email').value = user.email;
+                document.getElementById('password').value = user.password;
+            })
+            .catch(error => console.error('There was a problem with the fetch operation:', error));
+    }
+
+    // Function to delete a user
+    function deleteUser(id) {
+        fetch(`${apiUrl}/${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            fetchUsers();
+        })
+        .catch(error => console.error('There was a problem with the fetch operation:', error));
+    }
+
+    // Initial fetch of users
+    fetchUsers();
+</script>
+
+</body>
+</html>
