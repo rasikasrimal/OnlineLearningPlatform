@@ -1,5 +1,5 @@
 # EduVerse - Online Learning Platform
-
+edit
 ## Description
 Develop an online learning platform where users can enroll in courses, track their progress, and interact with instructors. The platform will feature user management, course management, enrollment, progress tracking, and communication between students and instructors.<br>
 [Database Schema](https://github.com/rasikasrimal/OnlineLearningPlatform/blob/rasika/DB-Schema/readme.md#online-learning-platform-database-schema)
