@@ -1,4 +1,4 @@
-# Online Learning Platform
+# EduVerse - Online Learning Platform
 
 ## Description
 Develop an online learning platform where users can enroll in courses, track their progress, and interact with instructors. The platform will feature user management, course management, enrollment, progress tracking, and communication between students and instructors.<br>
