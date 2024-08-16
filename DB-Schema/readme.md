@@ -1,4 +1,4 @@
-[back to readme.md](https://github.com/rasikasrimal/OnlineLearningPlatform/tree/rasika?tab=readme-ov-file#online-learning-platform)
+[back to readme.md](https://github.com/rasikasrimal/OnlineLearningPlatform/tree/main)
 
 # Online Learning Platform Database Schema
 
@@ -243,5 +243,5 @@ CREATE TABLE marks (
     FOREIGN KEY (grade_id) REFERENCES grades(grade_id)
 );
 ```
-[back to readme.md](https://github.com/rasikasrimal/OnlineLearningPlatform/tree/rasika?tab=readme-ov-file#online-learning-platform)
+[back to readme.md](https://github.com/rasikasrimal/OnlineLearningPlatform/tree/main)
 
