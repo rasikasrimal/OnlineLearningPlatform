@@ -8,14 +8,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Created by Chathuri
  * */
 
-//@Configuration
+@Configuration
 public class SecurityConfig implements WebMvcConfigurer {
 
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/").setViewName("home");
-//        registry.addViewController("/create").setViewName("create");
-//        registry.addViewController("/login").setViewName("login");
-//        registry.addViewController("/home").setViewName("home");
-//    }
+   public void addViewControllers(ViewControllerRegistry registry) {
+       registry.addViewController("/").setViewName("home");
+       registry.addViewController("/create").setViewName("create");
+       registry.addViewController("/login").setViewName("login");
+       registry.addViewController("/home").setViewName("home");
+    }
 
 }

@@ -3,6 +3,8 @@ package com.lms.security;
 import com.lms.repository.UserRepository;
 import com.lms.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.web.servlet.SecurityMarker;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +19,7 @@ import java.io.IOException;
 /*
  * Created by Chathuri
  * */
+
 
 @Component
 public class AuthenticationHandler implements AuthenticationSuccessHandler {

@@ -5,6 +5,7 @@ import com.lms.model.User;
 import com.lms.repository.UserRepository;
 import com.lms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,6 @@ import java.util.*;
 /*
  * Created by Chathuri
  * */
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
+
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         if (email != null) {
@@ -44,26 +45,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
     public User save(User user) {
         return userRepository.save(user);
     }
 
     @Override
+
     public List<User> getAll() {
         return null;
     }
 
     @Override
+
     public void delete(User account) {
 
     }
 
     @Override
+
     public List<User> getUserByRole(Role role) {
         return userRepository.getUserByRole(role);
     }
 
     @Override
+
     public User findById(String id) {
         return userRepository.userById(id);
     }

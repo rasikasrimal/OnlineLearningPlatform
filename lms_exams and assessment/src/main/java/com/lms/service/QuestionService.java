@@ -1,8 +1,11 @@
 package com.lms.service;
 
 import com.lms.model.Question;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+//@Service
 
 public interface QuestionService {
 

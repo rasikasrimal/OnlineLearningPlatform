@@ -7,8 +7,10 @@ package com.lms.service;
 
 import com.lms.model.Exam;
 import com.lms.model.Grade;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+//@Service
 
 public interface GradeService {
 

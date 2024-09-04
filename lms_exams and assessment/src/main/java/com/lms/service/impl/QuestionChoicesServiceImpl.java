@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 /*
  * Created by Chathuri
  * */
-
 @Service
+
 public class QuestionChoicesServiceImpl implements QuestionChoicesService {
 
     @Autowired

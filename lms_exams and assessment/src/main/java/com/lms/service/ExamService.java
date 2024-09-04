@@ -1,12 +1,15 @@
 package com.lms.service;
 
 import com.lms.model.Exam;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /*
  * Created by Chathuri
  * */
+//@Service
+
 
 public interface ExamService {
 

@@ -4,7 +4,12 @@ package com.lms.service;
  * Created by Chathuri
  * */
 
+
+
 import com.lms.model.QuestionChoices;
+import org.springframework.stereotype.Service;
+//@Service
+
 
 public interface QuestionChoicesService {
 
