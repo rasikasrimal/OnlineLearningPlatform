@@ -2,6 +2,7 @@ package com.learningplatform.learning_platform.controller;
 import com.learningplatform.learning_platform.exception.ResourceNotFoundException;
 import com.learningplatform.learning_platform.model.Course;
 import com.learningplatform.learning_platform.repository.CourseRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,9 @@ public class CourseController {
 
     //build REST API for add courses
     @PostMapping("/addCourse")
-    public Course createCourse(@RequestBody Course course) {
-        return courseRepository.save(course);
+    public ResponseEntity<String> createCourse(@Valid @RequestBody Course course) {
+         courseRepository.save(course);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Course created successfully");
     }
 
     //build REST API for get courses by id
@@ -65,7 +67,7 @@ public class CourseController {
         courseRepository.delete(course);
 
         Map<String, String> response = new HashMap<>();
-        response.put("Status", "Course with id " + id + " deleted successfully");
+        response.put("DELETED => ","Course with id " + id + " deleted successfully");
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }

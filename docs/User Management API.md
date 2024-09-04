@@ -1,12 +1,14 @@
 # User Management API
 
+## Author Information
+- **Author**: Rasika Srimal
+
 ## Overview
 
 This API provides CRUD operations for managing users. It includes endpoints for viewing, creating, updating, and deleting users. The API is built with Spring Boot and can be tested using tools like Postman or directly through an HTML frontend.
 
 ## Base URL
 http://localhost:8080/api/v1
-
 
 ## Endpoints
 
@@ -154,7 +156,3 @@ You can test the API using [Postman](https://www.postman.com/) with the followin
 ## Frontend Integration
 
 An HTML interface is available to interact with the API. You can test the endpoints directly from the frontend to ensure seamless functionality.
-
-## Author Information
-
-- **Author**: Rasika Srimal
