@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* Basic reset for consistent styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f4f7f6;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .register-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form method="post" class="register-form" th:object="${registerDTO}">
+        <h2>Register</h2>
+
+        <div th:if="${success}">
+            <strong>Account Created Successfully!</strong>
+        </div>
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <div class="form-group">
+            <label for="firstname">First Name</label>
+            <input id="firstname" th:field="*{firstName}">
+            <p th:if="${#fields.hasErrors('firstName')}"
+               th:errors="*{firstName}" class="text-danger"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <input id="lastname" th:field="*{lastName}">
+            <p th:if="${#fields.hasErrors('lastName')}"
+               th:errors="*{lastName}" class="text-danger"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" th:field="*{email}">
+            <p th:if="${#fields.hasErrors('email')}"
+               th:errors="*{email}" class="text-danger"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input id="phone" th:field="*{phone}">
+            <p th:if="${#fields.hasErrors('phone')}"
+               th:errors="*{phone}" class="text-danger"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}">
+            <p th:if="${#fields.hasErrors('password')}"
+               th:errors="*{password}" class="text-danger"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" th:field="*{confirmPassword}">
+            <p th:if="${#fields.hasErrors('confirmPassword')}"
+               th:errors="*{confirmPassword}" class="text-danger"></p>
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+
+        <p class="login-link">Already have an account? <a href="/login">Login here</a></p>
+    </form>
+</div>
+</body>
+</html>
