@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update User</title>
+</head>
+<body>
+<h1>Update User</h1>
+<label for="updateUserId">User ID:</label>
+<input type="number" id="updateUserId" name="updateUserId" min="1"><br>
+<label for="updateUsername">Username:</label>
+<input type="text" id="updateUsername" name="updateUsername"><br>
+<label for="updateEmail">Email:</label>
+<input type="email" id="updateEmail" name="updateEmail"><br>
+<label for="updatePassword">Password:</label>
+<input type="password" id="updatePassword" name="updatePassword"><br>
+<button type="button" onclick="updateUser()">Update User</button>
+<pre id="result"></pre>
+
+<script>
+  function updateUser() {
+    const userId = document.getElementById('updateUserId').value;
+    const user = {
+      username: document.getElementById('updateUsername').value,
+      email: document.getElementById('updateEmail').value,
+      password: document.getElementById('updatePassword').value
+    };
+
+    fetch(`/api/v1/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+            .then(response => response.json())
+            .then(data => {
+              document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+              document.getElementById('result').textContent = 'Error: ' + error;
+            });
+  }
+</script>
+</body>
+</html>
