@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get All Users</title>
+</head>
+<body>
+<h1>Get All Users</h1>
+<button onclick="fetchUsers()">Fetch Users</button>
+<pre id="result"></pre>
+
+<script>
+    function fetchUsers() {
+        fetch('/api/v1/users')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('result').textContent = 'Error: ' + error;
+            });
+    }
+</script>
+</body>
+</html>
