@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get All Users</title>
+</head>
+<body>
+<h1>All Users</h1>
+<button onclick="getAllUsers()">Fetch All Users</button>
+<div id="users"></div>
+
+<script>
+    async function getAllUsers() {
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/users');
+            if (!response.ok) {
+                throw new Error('Failed to fetch users');
+            }
+            const users = await response.json();
+            let userHTML = '<ul>';
+            users.forEach(user => {
+                userHTML += `<li>ID: ${user.id}, Username: ${user.username}, Email: ${user.email}</li>`;
+            });
+            userHTML += '</ul>';
+            document.getElementById('users').innerHTML = userHTML;
+        } catch (error) {
+            document.getElementById('users').innerHTML = 'Error: ' + error.message;
+        }
+    }
+</script>
+</body>
+</html>
