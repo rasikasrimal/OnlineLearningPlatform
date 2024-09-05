@@ -38,12 +38,14 @@ public class StudentsExamsRepositoryImpl implements StudentsExamsRepositoryExten
 
             Update update = new Update();
 
-            //TODO this time only one attempt
+
+            //to do this time only one attempt
             update.set("attempts", 1);
 
             mongoTemplate.updateFirst(query, update, StudentsExams.class);
         } catch (Exception ex) {
-            //TODO logger
+
+            //to do logger
             System.out.println("error ----");
         }
 
@@ -53,7 +55,9 @@ public class StudentsExamsRepositoryImpl implements StudentsExamsRepositoryExten
     public List<StudentsExams> getFinishedExamByStudentID(String studentId) {
         Query query = new Query();
         Criteria criteria = new Criteria("studentId").is(studentId);
-        //TODO attempts greater than one only
+
+        //to do attempts greater than one only
+
         Criteria criteria1 = new Criteria("attempts").gte(1);
         query.addCriteria(criteria).addCriteria(criteria1);
         return mongoTemplate.find(query, StudentsExams.class);

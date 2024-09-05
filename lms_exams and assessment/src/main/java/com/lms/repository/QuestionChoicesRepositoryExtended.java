@@ -5,10 +5,8 @@ package com.lms.repository;
  * */
 
 import com.lms.model.QuestionChoices;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 
-//@Repository
+
 
 public interface QuestionChoicesRepositoryExtended {
 

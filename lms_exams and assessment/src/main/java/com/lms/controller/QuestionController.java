@@ -35,8 +35,8 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-    //TODO comments should be added
-    //TODO error handling should be added
+    //get the details of quiz which assign to students
+
 
     @RequestMapping(value = "/assign_quizz", method = RequestMethod.GET)
     public String assign_quizz_view(HttpServletRequest request, Model model) {

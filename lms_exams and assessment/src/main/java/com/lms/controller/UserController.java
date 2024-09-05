@@ -32,8 +32,8 @@ public class UserController {
 
     private static final Logger LOGGER = LogManager.getLogger(UserController.class);
 
-    //TODO comments should be added
-    //TODO error handling should be added
+    //Create users
+
 
     @Autowired
     private UserService userService;

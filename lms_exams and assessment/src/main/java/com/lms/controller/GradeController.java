@@ -39,6 +39,8 @@ public class GradeController {
     @Autowired
     private QuestionService questionService;
 
+    //View Results
+
     @RequestMapping(value = "/view_result", method = RequestMethod.GET)
     public String view_result(HttpServletRequest request, Model model) {
 

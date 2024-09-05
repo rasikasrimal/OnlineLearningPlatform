@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Chathuri
  * */
 
-//@Repository
+
 
 public interface ExamRepositoryExtended {
 

@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * Created by Chathuri
  * */
 
-//@Repository
+
 public interface GradeRepository extends MongoRepository<Grade, String>, GradeRepositoryExtended {
 }

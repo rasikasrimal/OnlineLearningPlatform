@@ -38,8 +38,8 @@ public class StudentExamsController {
     @Autowired
     private StudentExamsService studentExamsService;
 
-    //TODO comments should be added
-    //TODO error handling should be added
+    //Assign exam to students
+
 
     @RequestMapping(value = "/assign_exams_to_students", method = RequestMethod.GET)
     public String assign_exams_to_students_view(HttpServletRequest request, Model model) {
