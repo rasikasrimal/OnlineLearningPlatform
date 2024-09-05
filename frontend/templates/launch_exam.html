@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Launch Exam</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:replace='Includes/header.html :: header'/>
+
+<div sec:authorize="hasAuthority('STUDENT')">
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="Includes/student_menu.html :: studentmenu"/>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <h3 class="text-center">
+                    Launch Exams
+                </h3>
+                <div class="form-group">
+                    <label for="txt-exam">
+                        Exam Description
+                    </label>
+                    <input type="text" class="form-control" th:value="${exam.getExamname()}" id="txt-exam"
+                           disabled/>
+                </div>
+                <input type="hidden" th:value="${exam.getId()}" id="exam-id">
+                <div class="form-group">
+                    <label for="txt-exam">
+                        Exam Duration
+                    </label>
+                    <input type="text" class="form-control" th:value="${exam.getDuration()}" id="txt-time"
+                           disabled/>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <button id="back-quiz" class="btn btn-primary pull-left">Back <<</button>
+                            <button id="next-quiz" class="btn btn-primary pull-right">Next >></button>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+
+                <div id="mid-pane"></div>
+
+
+                <div class="box-footer">
+                    <button id="finish-exam" class="btn btn-primary pull-right">Finish the Exam</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{plugins/jQuery/jQuery-2.2.0.min.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</body>
+</html>
+
+<script>
+
+    $('#next-quiz').click(function () {
+        $('#back-quiz').show();
+        $('#next-quiz').html('Next >>');
+        var answer = get_choice();
+        var question_id = 0;
+        if (document.getElementById('question-id') === null) {
+            var question_id = 0;
+        } else {
+            var question_id = document.getElementById('question-id').value;
+        }
+
+        $.ajax({
+            url: "/launch_exam_progress?add=1&questionid=" + question_id + "&answer=" + answer,
+            success: function (result) {
+                $("#mid-pane").html(result);
+            }
+        });
+        $('#finish-exam').show();
+    });
+
+    $('#back-quiz').click(function () {
+        $('#back-quiz').show();
+        var answer = get_choice();
+        var question_id = 0;
+        if (document.getElementById('question-id') === null) {
+            var question_id = 0;
+        } else {
+            var question_id = document.getElementById('question-id').value;
+        }
+
+        $.ajax({
+            url: "/launch_exam_progress?deduct=1&questionid=" + question_id + "&answer=" + answer,
+            success: function (result) {
+                $("#mid-pane").html(result);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#back-quiz').hide();
+        $('#finish-exam').hide();
+        $('#next-quiz').html('Start');
+
+    });
+
+    function get_choice() {
+
+        var radios = document.getElementsByName('choice');
+        for (var i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked) {
+                return radios[i].value;
+            }
+        }
+    }
+
+    $('#finish-exam').on('click', function () {
+        var examId = $('#exam-id').val();
+        var studentId = $('#txt-user-id').val();
+
+        var exam_json = {
+            'examId': examId,
+            'studentId': studentId
+        };
+
+        $.ajax({
+            async: false,
+            method: "POST",
+            url: '/finish_exam',
+            data: JSON.stringify(exam_json),
+            dataType: 'json',
+            contentType: 'application/json',
+            cache: false,
+            success: function (ret) {
+                if (ret.status === 'SUCCESS') {
+                    alert(ret.message);
+                    window.location.href = "/home";
+                } else {
+                    alert(ret.message);
+                }
+            },
+            error: function (xhr, status, err) {
+                alert("Server cannot be reached!");
+            }
+        });
+    });
+
+
+</script>
