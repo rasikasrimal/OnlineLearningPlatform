@@ -81,6 +81,11 @@
     table td button.delete:hover {
       background-color: #c82333;
     }
+    .error-message {
+      color: #dc3545;
+      font-size: 1em;
+      margin-top: 10px;
+    }
   </style>
   <script>
     // Fetch All Users
@@ -88,21 +93,26 @@
       fetch('http://localhost:8080/api/v1/users')
               .then(response => response.json())
               .then(data => {
-                let userTable = document.getElementById("userTableBody");
-                userTable.innerHTML = '';
-                data.forEach(user => {
-                  let row = `<tr>
-              <td>${user.id}</td>
-              <td>${user.username}</td>
-              <td>${user.email}</td>
-              <td>
-                <button class="update" onclick="fetchUser(${user.id})">Update</button>
-                <button class="delete" onclick="deleteUser(${user.id})">Delete</button>
-              </td>
-            </tr>`;
-                  userTable.innerHTML += row;
-                });
+                displayUsers(data, 'allUsersTableBody');
               });
+    }
+
+    // Display Users in Table
+    function displayUsers(users, tableId) {
+      let userTable = document.getElementById(tableId);
+      userTable.innerHTML = '';
+      users.forEach(user => {
+        let row = `<tr>
+          <td>${user.id}</td>
+          <td>${user.username}</td>
+          <td>${user.email}</td>
+          <td>
+            <button class="update" onclick="fetchUser(${user.id})">Update</button>
+            <button class="delete" onclick="deleteUser(${user.id})">Delete</button>
+          </td>
+        </tr>`;
+        userTable.innerHTML += row;
+      });
     }
 
     // Fetch User by ID (for Update)
@@ -148,6 +158,27 @@
               .then(() => fetchAllUsers());
     }
 
+    // Search Users by ID
+    function searchUserById() {
+      let id = document.getElementById("searchId").value;
+      fetch(`http://localhost:8080/api/v1/users/${id}`)
+              .then(response => {
+                if (response.ok) {
+                  return response.json();
+                } else {
+                  throw new Error('User not found');
+                }
+              })
+              .then(data => {
+                displayUsers([data], 'searchResultTableBody'); // Display the single user found
+                document.getElementById("errorMessage").innerText = ''; // Clear any previous error message
+              })
+              .catch(error => {
+                document.getElementById("searchResultTableBody").innerHTML = ''; // Clear search result table
+                document.getElementById("errorMessage").innerText = error.message; // Display error message
+              });
+    }
+
     // Clear form after save or update
     function clearForm() {
       document.getElementById("userId").value = '';
@@ -155,10 +186,41 @@
       document.getElementById("email").value = '';
       document.getElementById("password").value = '';
     }
+
+    // Initial Load
+    window.onload = function() {
+      fetchAllUsers();
+    };
   </script>
 </head>
-<body onload="fetchAllUsers()">
+<body>
 <h1>User Management</h1>
+
+<!-- Search User by ID -->
+<form onsubmit="event.preventDefault(); searchUserById();">
+  <label for="searchId">Search by ID:</label>
+  <input type="text" id="searchId" required>
+  <button type="submit">Search</button>
+</form>
+
+<!-- Search Result Table -->
+<div id="searchResultContainer">
+  <h2>Search Result</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="searchResultTableBody">
+    <!-- Searched user will be loaded here dynamically -->
+    </tbody>
+  </table>
+  <p id="errorMessage" class="error-message"></p> <!-- Error message here -->
+</div>
 
 <!-- User Form (Create / Update) -->
 <form onsubmit="event.preventDefault(); saveUser();">
@@ -182,10 +244,9 @@
     <th>Actions</th>
   </tr>
   </thead>
-  <tbody id="userTableBody">
-  <!-- Users will be loaded here dynamically -->
+  <tbody id="allUsersTableBody">
+  <!-- All users will be loaded here dynamically -->
   </tbody>
 </table>
 </body>
 </html>
-
