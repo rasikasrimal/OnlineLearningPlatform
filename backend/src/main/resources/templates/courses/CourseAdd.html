@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Course</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #ffffff;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit {
+            background-color: #4CAF50;
+        }
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+        .btn-cancel {
+            background-color: #f44336;
+        }
+        .btn-cancel:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add Course</h1>
+
+<div class="container">
+    <form th:object="${courseDTO}" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <div class="form-group">
+            <label for="courseName">Course Name</label>
+            <input type="text" id="courseName" name="courseName" th:field="${courseDTO.courseName}">
+            <p th:if="${#fields.hasErrors('courseName')}"
+            th:errorclass="text-danger"
+            th:errors="${courseDTO.courseName}"></p>
+        </div>
+        <div class="form-group">
+            <label for="courseFee">Course Fee</label>
+            <input type="text" id="courseFee" name="courseFee" th:field="${courseDTO.courseFee}">
+            <p th:if="${#fields.hasErrors('courseFee')}"
+               th:errorclass="text-danger"
+               th:errors="${courseDTO.courseFee}"></p>
+        </div>
+        <div class="form-group">
+            <label for="courseDuration">Course Duration</label>
+            <input type="text" id="courseDuration" name="courseDuration" th:field="${courseDTO.courseDuration}">
+            <p th:if="${#fields.hasErrors('courseDuration')}"
+               th:errorclass="text-danger"
+               th:errors="${courseDTO.courseDuration}"></p>
+        </div>
+        <div class="form-group">
+            <label for="courseInstructor">Course Instructor</label>
+            <input type="text" id="courseInstructor" name="courseInstructor" th:field="${courseDTO.courseInstructor}">
+            <p th:if="${#fields.hasErrors('courseInstructor')}"
+               th:errorclass="text-danger"
+               th:errors="${courseDTO.courseInstructor}"></p>
+        </div>
+        <div class="buttons">
+            <button type="submit" class="btn btn-submit">Submit</button>
+            <button type="button" class="btn btn-cancel" onclick="window.location.href='/api/v1/getCourses';">Cancel</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

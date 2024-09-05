@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #ffffff;
+            transition: background-color 0.3s ease;
+        }
+        .btn-edit {
+            background-color: #4CAF50;
+            margin-right: 5px;
+        }
+        .btn-edit:hover {
+            background-color: #45a049;
+        }
+        .btn-delete {
+            background-color: #f44336;
+        }
+        .btn-delete:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Course Home</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Course Name</th>
+        <th>Course Fee</th>
+        <th>Course Duration</th>
+        <th>Course Instructor</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Use 'course' as the singular form while iterating -->
+    <tr th:each="course : ${courses}">
+        <td th:text="${course.id}"></td>
+        <td th:text="${course.courseName}"></td>
+        <td th:text="${course.courseFee}"></td>
+        <td th:text="${course.courseDuration}"></td>
+        <td th:text="${course.courseInstructor}"></td>
+        <td>
+            <!-- Edit Button with correct Thymeleaf link binding -->
+            <a th:href="@{/api/v1/updateCourse(id=${course.id})}">
+                <button type="button" class="btn btn-edit">Edit</button>
+            </a>
+
+
+            <a th:href="@{/api/v1/deleteCourse(id=${course.id})}">
+                <button type="button" class="btn btn-delete">Delete</button>
+            </a>
+
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
