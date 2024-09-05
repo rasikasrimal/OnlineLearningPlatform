@@ -1,13 +1,17 @@
-package com.learningplatform.learning_platform.repository;
+package com.lms.repository;
 
-import com.learningplatform.learning_platform.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.lms.model.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
-/**
- * Repository interface for User entity.
- * Authors:
- * - Rasika
- * Date: 8/9/2024
- */
-public interface UserRepository extends JpaRepository<User, Long> {
+/*
+ * Created by Chathuri
+ * */
+
+
+public interface UserRepository extends MongoRepository<User, String> , UserRepositoryExtended {
+
+    @Query(value = "{email: ?0}")
+    User findByEmail(String email);
+
 }

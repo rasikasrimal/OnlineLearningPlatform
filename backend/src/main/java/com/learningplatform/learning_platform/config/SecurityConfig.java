@@ -1,10 +1,21 @@
-package com.learningplatform.learning_platform.config;
+package com.lms.configs;
 
-/**
- * Entity class for User.
- * Authors:
- * - Rasika
- * Date: 8/9/2024
- */
-public class SecurityConfig {
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/*
+ * Created by Chathuri
+ * */
+
+@Configuration
+public class SecurityConfig implements WebMvcConfigurer {
+
+   public void addViewControllers(ViewControllerRegistry registry) {
+       registry.addViewController("/").setViewName("home");
+       registry.addViewController("/create").setViewName("create");
+       registry.addViewController("/login").setViewName("login");
+       registry.addViewController("/home").setViewName("home");
+    }
+
 }

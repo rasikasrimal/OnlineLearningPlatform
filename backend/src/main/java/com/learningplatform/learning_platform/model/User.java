@@ -1,39 +1,51 @@
-package com.learningplatform.learning_platform.model;
+package com.lms.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * Entity class for User.
- * Authors:
- * - Rasika
- * Date: 8/9/2024
- */
-@Entity
-public class User {
+import java.io.Serializable;
+
+/*
+ * Created by Chathuri
+ * */
+
+@Document
+public class User implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String username;
-    private String password;
-    private String email;
+    private String id;
 
-    public long getId() {
+    @Indexed(name = "email_idx", unique = true, background = true)
+    private String email;
+    private String name;
+    private String password;
+    private Role role = Role.STUDENT;
+    private String regtime;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -44,11 +56,19 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public Role getRole() {
+        return role;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getRegtime() {
+        return regtime;
+    }
+
+    public void setRegtime(String regtime) {
+        this.regtime = regtime;
     }
 }
