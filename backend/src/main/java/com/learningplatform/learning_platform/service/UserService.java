@@ -1,20 +1,24 @@
-package com.learningplatform.learning_platform.service;
+package com.lms.service;
 
-import com.learningplatform.learning_platform.model.User;
-import org.springframework.http.ResponseEntity;
+import com.lms.model.Role;
+import com.lms.model.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-/**
- * Service interface for User management
- * Authors:
- * - Rasika
- * Date: 8/9/2024
- */
-public interface UserService {
-    List<User> getAllUsers();
-    User createUser(User user);
-    ResponseEntity<User> getUserById(Long id);
-    ResponseEntity<User> updateUser(Long id, User user);
-    ResponseEntity<Void> deleteUser(Long id);
+/*
+ * Created by Chathuri
+ * */
+
+public interface UserService extends UserDetailsService {
+
+    User save(User user);
+
+    List<User> getAll();
+
+    void delete(User user);
+
+    List<User> getUserByRole(Role role);
+
+    User findById(String id);
 }
