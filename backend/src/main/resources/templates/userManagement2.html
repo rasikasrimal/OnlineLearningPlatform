@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management</title>
+  <style>
+    /* Add your CSS styling here */
+    form, table {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+  </style>
+  <script>
+    // Fetch All Users
+    function fetchAllUsers() {
+      fetch('http://localhost:8080/api/v1/users')
+              .then(response => response.json())
+              .then(data => {
+                displayUsers(data);
+              });
+    }
+
+    // Display Users in Table
+    function displayUsers(users) {
+      let userTable = document.getElementById("userTableBody");
+      userTable.innerHTML = '';
+      users.forEach(user => {
+        let row = `<tr>
+          <td>${user.id}</td>
+          <td>${user.username}</td>
+          <td>${user.email}</td>
+          <td>
+            <button onclick="fetchUser(${user.id})">Update</button>
+            <button onclick="deleteUser(${user.id})">Delete</button>
+          </td>
+        </tr>`;
+        userTable.innerHTML += row;
+      });
+    }
+
+    // Fetch User by ID (for Update)
+    function fetchUser(id) {
+      fetch(`http://localhost:8080/api/v1/users/${id}`)
+              .then(response => response.json())
+              .then(data => {
+                document.getElementById("userId").value = data.id;
+                document.getElementById("username").value = data.username;
+                document.getElementById("email").value = data.email;
+                document.getElementById("password").value = ''; // clear password field for update
+              });
+    }
+
+    // Create or Update User
+    function saveUser() {
+      let id = document.getElementById("userId").value;
+      let username = document.getElementById("username").value;
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+
+      let method = id ? 'PUT' : 'POST';
+      let url = id ? `http://localhost:8080/api/v1/users/${id}` : 'http://localhost:8080/api/v1/users';
+
+      fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, email, password })
+      })
+              .then(() => {
+                fetchAllUsers();
+                clearForm();
+              });
+    }
+
+    // Delete User
+    function deleteUser(id) {
+      fetch(`http://localhost:8080/api/v1/users/${id}`, {
+        method: 'DELETE'
+      })
+              .then(() => fetchAllUsers());
+    }
+
+    // Search Users
+    function searchUsers() {
+      let searchType = document.getElementById("searchType").value;
+      let searchTerm = document.getElementById("searchTerm").value;
+      let url = `http://localhost:8080/api/v1/users`;
+
+      if (searchType === 'username') {
+        url = `${url}?username=${searchTerm}`;
+      } else if (searchType === 'id') {
+        url = `${url}/${searchTerm}`;
+      }
+
+      fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                displayUsers(Array.isArray(data) ? data : [data]);
+              });
+    }
+
+    // Clear form after save or update
+    function clearForm() {
+      document.getElementById("userId").value = '';
+      document.getElementById("username").value = '';
+      document.getElementById("email").value = '';
+      document.getElementById("password").value = '';
+    }
+  </script>
+</head>
+<body onload="fetchAllUsers()">
+<h1>User Management</h1>
+
+<!-- Search Form -->
+<form onsubmit="event.preventDefault(); searchUsers();">
+  <label for="searchType">Search by:</label>
+  <select id="searchType" required>
+    <option value="username">Username</option>
+    <option value="id">ID</option>
+  </select><br>
+  <label for="searchTerm">Search term:</label>
+  <input type="text" id="searchTerm" required><br>
+  <button type="submit">Search</button>
+</form>
+
+<!-- User Form (Create / Update) -->
+<form onsubmit="event.preventDefault(); saveUser();">
+  <input type="hidden" id="userId" />
+  <label for="username">Username:</label>
+  <input type="text" id="username" required><br>
+  <label for="email">Email:</label>
+  <input type="email" id="email" required><br>
+  <label for="password">Password:</label>
+  <input type="password" id="password" required><br>
+  <button type="submit">Save User</button>
+</form>
+
+<h2>All Users</h2>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody id="userTableBody">
+  <!-- Users will be loaded here dynamically -->
+  </tbody>
+</table>
+</body>
+</html>
