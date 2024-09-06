@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Entity class for User.
- * Authors:
- * - Rasika
- * Date: 8/9/2024
+ * Controller for User entity.
  */
 @RestController
 @RequestMapping("/api/v1/users")
@@ -32,17 +29,17 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         return userService.deleteUser(id);
     }
 }

@@ -5,9 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Repository interface for User entity.
- * Authors:
- * - Rasika
- * Date: 8/9/2024
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 }
