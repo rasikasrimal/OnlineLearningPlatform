@@ -1,17 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Learning Platform</title>
     <style>
-        body {
+        html, body {
+            height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
         }
 
         /* Header styles */
@@ -23,6 +30,12 @@
             background-color: #4A90E2;
             color: white;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0;
         }
 
         /* Main navigation styles */
@@ -56,44 +69,79 @@
         .btn {
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .btn-login {
-            background-color: #fff;
-            color: #4A90E2;
+            background-color: #14df21; /* Light green */
+            color: #ffffff;
+            border: 1px solid #4CAF50;
         }
 
         .btn-register {
-            background-color: #ffd700;
-            color: #333;
+            background-color: #ffffff; /* Light blue */
+            color: #000000;
+            border: 1px solid #1E90FF;
         }
+
         .btn-logout {
-            background-color: #fc2e2e;
+            background-color: #ef1919; /* Darker red */
             color: #ffffff;
+            border: 1px solid #D32F2F;
         }
 
         .btn:hover {
-            opacity: 0.8;
+            transform: translateY(-3px);
+            opacity: 0.9;
         }
 
         /* Main content styles */
         main {
+            flex: 1;
             padding: 60px 40px;
             text-align: center;
         }
 
-        h1 {
+        main h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
 
-        p {
+        main p {
             font-size: 1.2rem;
             color: #666;
+            margin-bottom: 40px;
+        }
+
+        .courses-btn {
+            padding: 12px 24px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .courses-btn:hover {
+            background-color: #357ABD;
+            transform: translateY(-3px);
+        }
+
+        /* Footer style */
+        footer {
+            padding: 10px;
+            background-color: #4A90E2;
+            color: #ffffff;
+            text-align: center;
+            font-size: 14px;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -101,36 +149,38 @@
 
 <!-- Header with navigation and buttons -->
 <header>
-    <h1>Learnify</h1>
+    <h1>OLP</h1>
     <nav>
         <ul class="nav-menu">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Courses</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/api/v1/getCourses">Courses</a></li>
             <li><a href="#">About Us</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
-    <div class="buttons" >
+    <div class="buttons">
         <button sec:authorize="!isAuthenticated()" class="btn btn-login" onclick="window.location.href='/login';">Login</button>
         <button sec:authorize="!isAuthenticated()" class="btn btn-register" onclick="window.location.href='/register';">Register</button>
         <form sec:authorize="isAuthenticated()" method="post" action="/logout">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <button type="submit" class="btn btn-logout" >Logout</button>
+            <button type="submit" class="btn btn-logout">Logout</button>
         </form>
     </div>
 </header>
 
 <!-- Main content -->
 <main>
-    <h1>Welcome to Learnify</h1>
+    <h1>Welcome to ONLINE LEARNING PLATFORM</h1>
     <p>Empower your learning journey with the best online courses and resources.</p>
+
+    <!-- Courses Button -->
+    <button type="button" class="courses-btn" onclick="window.location.href='/api/v1/getCourses';">View Courses</button>
 </main>
 
-<div>
-    <button type="button" onclick="window.location.href='/api/v1/getCourses';">Courses</button>
-</div>
-
-
+<!-- Footer -->
+<footer>
+    &copy; 2024 Online Learning Platform. All rights reserved.
+</footer>
 
 </body>
 </html>
