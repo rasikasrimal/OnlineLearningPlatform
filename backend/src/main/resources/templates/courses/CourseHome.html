@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Home</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #4A90E2;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Main navigation styles */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-menu li {
+            display: inline;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #d1e9ff;
+        }
+
+        /* Button styles */
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login {
+            background-color: #ffffff;
+            color: #4A90E2;
+            border: 1px solid #4A90E2;
+        }
+
+        .btn-login:hover {
+            background-color: #e0f2f1;
+            transform: translateY(-3px);
+        }
+
+        .btn-register {
+            background-color: #007bff;
+            color: #ffffff;
+            border: 1px solid #007bff;
+        }
+
+        .btn-register:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .btn-logout {
+            background-color: #fc2e2e;
+            color: #ffffff;
+            border: 1px solid #fc2e2e;
+        }
+
+        .btn-logout:hover {
+            background-color: #d32f2f;
+            transform: translateY(-3px);
+        }
+
+        .btn-add {
+            background-color: #4A90E2;
+            color: #ffffff;
+            border: 1px solid #4A90E2;
+        }
+
+        .btn-add:hover {
+            background-color: #357ABD;
+            transform: translateY(-3px);
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-edit:hover {
+            background-color: #45a049;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-delete:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Main content styles */
+        main {
+            flex: 1;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        main h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        main p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .courses-btn {
+            padding: 12px 24px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .courses-btn:hover {
+            background-color: #357ABD;
+            transform: translateY(-3px);
+        }
+
+        /* Footer style */
+        footer {
+            padding: 10px;
+            background-color: #4A90E2;
+            color: #ffffff;
+            text-align: center;
+            font-size: 14px;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>OLP</h1>
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/api/v1/getCourses">Courses</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="buttons">
+        <button sec:authorize="!isAuthenticated()" class="btn btn-login" onclick="window.location.href='/login';">Login</button>
+        <button sec:authorize="!isAuthenticated()" class="btn btn-register" onclick="window.location.href='/register';">Register</button>
+        <form sec:authorize="isAuthenticated()" method="post" action="/logout">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button type="submit" class="btn btn-logout">Logout</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <h1>Available Courses</h1>
+
+    <div style="text-align: center; margin: 20px;">
+        <button class="btn btn-add" onclick="window.location.href='/api/v1/addCourse';">Add Course</button>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Course Fee</th>
+            <th>Course Duration</th>
+            <th>Course Instructor</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Use 'course' as the singular form while iterating -->
+        <tr th:each="course : ${courses}">
+            <td th:text="${course.id}"></td>
+            <td th:text="${course.courseName}"></td>
+            <td th:text="${course.courseFee}"></td>
+            <td th:text="${course.courseDuration}"></td>
+            <td th:text="${course.courseInstructor}"></td>
+            <td>
+                <!-- Edit Button with correct Thymeleaf link binding -->
+                <a th:href="@{/api/v1/updateCourse(id=${course.id})}">
+                    <button type="button" class="btn btn-edit">Edit</button>
+                </a>
+
+                <a th:href="@{/api/v1/deleteCourse(id=${course.id})}">
+                    <button type="button" class="btn btn-delete">Delete</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    &copy; 2024 Online Learning Platform. All rights reserved.
+</footer>
+
+</body>
+</html>

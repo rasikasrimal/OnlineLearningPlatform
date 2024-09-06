@@ -33,4 +33,37 @@ public class Course {
     @NotEmpty(message = "Course Instructor is mandatory")
     @Column(name = "course_instructor")
     private String courseInstructor;
+
+
+    public @NotEmpty(message = "Course name is mandatory") String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(@NotEmpty(message = "Course name is mandatory") String courseName) {
+        this.courseName = courseName;
+    }
+
+    public @NotEmpty(message = "Course Fee is mandatory") String getCourseFee() {
+        return courseFee;
+    }
+
+    public void setCourseFee(@NotEmpty(message = "Course Fee is mandatory") String courseFee) {
+        this.courseFee = courseFee;
+    }
+
+    public @NotEmpty(message = "Course Duration is mandatory") String getCourseDuration() {
+        return courseDuration;
+    }
+
+    public void setCourseDuration(@NotEmpty(message = "Course Duration is mandatory") String courseDuration) {
+        this.courseDuration = courseDuration;
+    }
+
+    public @NotEmpty(message = "Course Instructor is mandatory") String getCourseInstructor() {
+        return courseInstructor;
+    }
+
+    public void setCourseInstructor(@NotEmpty(message = "Course Instructor is mandatory") String courseInstructor) {
+        this.courseInstructor = courseInstructor;
+    }
 }
