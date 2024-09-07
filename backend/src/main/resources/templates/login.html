@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Learnify</title>
+    <title>Online Learning Platform</title>
     <style>
         body {
             margin: 0;
@@ -20,71 +20,112 @@
         .login-container {
             background-color: #ffffff;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             width: 400px;
             text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
         }
 
         h2 {
             margin-bottom: 20px;
             color: #4A90E2;
+            font-size: 26px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
         }
 
         .input-field {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin: 10px 0;
+            width: 100%;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.2);
+            outline: none;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             background-color: #4A90E2;
             color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             margin-top: 20px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s;
         }
 
         .btn-submit:hover {
             background-color: #357ABD;
+            transform: translateY(-2px);
+        }
+
+        .register-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
         }
 
         .register-link {
-            display: block;
-            margin-top: 20px;
             color: #4A90E2;
             text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s;
         }
 
         .register-link:hover {
             color: #357ABD;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
 <div class="login-container">
-    <h2>Login to Learnify</h2>
+    <h2>LOGIN TO YOUR ACCOUNT</h2>
     <form action="/login" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <input type="email" id="email" name="username" class="input-field" placeholder="Email" required>
-        <input type="password" id="password" name="password" class="input-field" placeholder="Password" required>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="username" class="input-field" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="input-field" placeholder="Enter your password" required>
+        </div>
+
         <button type="submit" class="btn-submit">Login</button>
     </form>
 
-
-    <a href="/register" class="register-link">Don't have an account? Register here</a>
+    <div class="register-text">
+        Don't have an account? <a href="/register" class="register-link">Register here</a>
+    </div>
 </div>
 
 </body>

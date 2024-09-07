@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Online Learning Platform - Register</title>
     <style>
-        /* Basic reset for consistent styling */
+        /* Basic reset and font settings */
         * {
             margin: 0;
             padding: 0;
@@ -19,130 +19,161 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #f4f7f6;
+            background-color: #f0f4f8;
         }
 
         .container {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             width: 400px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
         }
 
         .register-form h2 {
-            text-align: center;
             margin-bottom: 20px;
-            color: #333;
+            color: #4A90E2;
+            font-size: 26px;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            text-align: left;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
             font-weight: bold;
-            color: #555;
         }
 
-        .form-group input,
-        .form-group select {
+        .form-group input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            outline: none;
-            transition: border-color 0.3s ease;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: #007bff;
+        .form-group input:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.2);
+            outline: none;
         }
 
         .btn {
             width: 100%;
-            padding: 10px;
-            background: #007bff;
+            padding: 12px;
+            background-color: #4A90E2;
             border: none;
-            border-radius: 4px;
-            color: #ffffff;
+            border-radius: 8px;
+            color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s ease;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s;
         }
 
         .btn:hover {
-            background: #0056b3;
+            background-color: #357ABD;
+            transform: translateY(-2px);
+        }
+
+        .text-danger {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
         }
 
         .login-link {
-            text-align: center;
-            margin-top: 10px;
-            color: #555;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
         }
 
         .login-link a {
-            color: #007bff;
+            color: #4A90E2;
             text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s;
         }
 
         .login-link a:hover {
-            text-decoration: underline;
+            color: #357ABD;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 <div class="container">
     <form method="post" class="register-form" th:object="${registerDTO}">
-        <h2>Register</h2>
+        <h2>REGISTER</h2>
 
-        <div th:if="${success}">
-            <strong>Account Created Successfully!</strong>
+        <div th:if="${success}" class="success-message">
+            Account Created Successfully!
         </div>
 
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
         <div class="form-group">
             <label for="firstname">First Name</label>
-            <input id="firstname" th:field="*{firstName}">
+            <input type="text" id="firstname" th:field="*{firstName}" placeholder="Enter your first name">
             <p th:if="${#fields.hasErrors('firstName')}"
                th:errors="*{firstName}" class="text-danger"></p>
         </div>
 
         <div class="form-group">
             <label for="lastname">Last Name</label>
-            <input id="lastname" th:field="*{lastName}">
+            <input type="text" id="lastname" th:field="*{lastName}" placeholder="Enter your last name">
             <p th:if="${#fields.hasErrors('lastName')}"
                th:errors="*{lastName}" class="text-danger"></p>
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input id="email" th:field="*{email}">
+            <input type="email" id="email" th:field="*{email}" placeholder="Enter your email">
             <p th:if="${#fields.hasErrors('email')}"
                th:errors="*{email}" class="text-danger"></p>
         </div>
 
         <div class="form-group">
             <label for="phone">Phone</label>
-            <input id="phone" th:field="*{phone}">
+            <input type="text" id="phone" th:field="*{phone}" placeholder="Enter your phone number">
             <p th:if="${#fields.hasErrors('phone')}"
                th:errors="*{phone}" class="text-danger"></p>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" th:field="*{password}">
+            <input type="password" id="password" th:field="*{password}" placeholder="Enter your password">
             <p th:if="${#fields.hasErrors('password')}"
                th:errors="*{password}" class="text-danger"></p>
         </div>
 
         <div class="form-group">
             <label for="confirm_password">Confirm Password</label>
-            <input type="password" id="confirm_password" th:field="*{confirmPassword}">
+            <input type="password" id="confirm_password" th:field="*{confirmPassword}" placeholder="Confirm your password">
             <p th:if="${#fields.hasErrors('confirmPassword')}"
                th:errors="*{confirmPassword}" class="text-danger"></p>
         </div>
